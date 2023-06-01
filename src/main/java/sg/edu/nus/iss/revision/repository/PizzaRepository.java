@@ -12,7 +12,7 @@ import sg.edu.nus.iss.revision.model.Order;
 @Repository
 public class PizzaRepository {
     @Autowired @Qualifier("pizza")
-    private RedisTemplate<String, String> template;
+    private RedisTemplate<String, Object> template;
 
     public void save(Order ord){
         
@@ -21,7 +21,7 @@ public class PizzaRepository {
     }
 
     public Optional<Order> get(String orderId){
-        String json = template.opsForValue().get(orderId);
+        String json = (String) template.opsForValue().get(orderId);
         if((null == json || json.trim().length() <= 0)){
             return Optional.empty();
         }
